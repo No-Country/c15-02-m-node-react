@@ -1,40 +1,40 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/db.config");
 const Transaction = require("./transactions.model");
-const Card = require("./cards.model");
 
-
-const Account = sequelize.define("Accounts", {
-  id: {
+const Card = sequelize.define("Cards", {
+  numero: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true,
-  },
-  moneda: {
-    type: DataTypes.STRING,
     allowNull: false,
+  },
+  cvv: {
+    type:DataTypes.INTEGER,
+    allowNull:false,
   },
   tipo: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  balance: {
-    type: DataTypes.DECIMAL(10, 2),
-    defaultValue: 0.0,
-  },
   estado: {
     type: DataTypes.STRING,
     defaultValue: 'activa',
   },
+  expiracion: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  limite: {
+    type: DataTypes.DECIMAL,
+    allowNull: false,
+  }
 },{
   paranoid: true,
   timestamps: true, 
   deletedAt: "deletedAt", 
 });
 
-Account.hasMany(Transaction, { onDelete: "CASCADE" })
-Transaction.belongsTo(Account);
-Account.hasMany(Card, { onDelete: "CASCADE" })
-Card.belongsTo(Account)
+Card.hasMany(Transaction, {onDelete:"CASCADE"})
+Transaction.belongsTo(Card);
 
-module.exports=Account
+module.exports = Card
