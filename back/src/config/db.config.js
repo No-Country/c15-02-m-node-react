@@ -8,7 +8,7 @@ const initializeDB = async () => {
   try {
     await sequelize.authenticate();
     console.log("Connected to DB");
-    await sequelize.sync({ force: true }); //force=>true in dev ONLY
+    await sequelize.sync({ force: false }); //force=>true in dev ONLY
   } catch (error) {
     console.error("Connection to DB FAILED", error);
   }

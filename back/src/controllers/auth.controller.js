@@ -1,3 +1,4 @@
+const { createToken } = require("../middleware/auth.mdw");
 const { authService } = require("../services/index.services");
 
 const createUser = async (req, res) => {
@@ -10,13 +11,15 @@ const createUser = async (req, res) => {
 };
 
 const validateUser = async (req, res) => {
+  //console.log(req.body);
   try {
-    const validateUser = await authService.validateUser(req.body);
-    if(!validateUser){
+    const user = await authService.validateUser(req.body);
+    if(!user){
       return res.status(404).json({message:"User not found"})
     }
-    //TODO => token
-    return res.status(200).json({message:"successful login"});
+    const generatedToken = createToken(user)
+    res.cookie('jwt', generatedToken, { httpOnly: true });
+    return res.status(200).json({user:user[0], token:generatedToken}) // user[0] => sqlite
   } catch (err) {
     res.status(500).json({ action: "Validate User", error: err.message });
   }
