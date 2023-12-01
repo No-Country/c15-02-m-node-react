@@ -51,7 +51,7 @@ const User = sequelize.define("Users", {
   deletedAt: "deletedAt", 
 });
 
-User.hasMany(Account, {onDelete:"CASCADE"})
-Account.belongsTo(User)
+User.hasMany(Account, {onDelete:"CASCADE", foreignKey: { allowNull: false }})
+Account.belongsTo(User, { foreignKey: { allowNull: false } })
 
 module.exports = User;
