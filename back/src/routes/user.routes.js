@@ -1,18 +1,23 @@
 const express = require('express')
 const { userController, accountController } = require('../controllers/index.controller')
 const { authenticateToken, authorizeToken } = require('../middleware/auth.mdw')
+const { validateAccountUpdate } = require('../middleware/validations/accountValidation')
 const userRouter = express.Router()
 
-//Prueba => TO-DO permiso superuser
-userRouter.get('/', userController.getAllUsers)
+const authMdw = [authenticateToken, authorizeToken]
+
 
 //INFO personal
-userRouter.get('/:userId', [authenticateToken, authorizeToken], userController.getUser)
+userRouter.get('/:userId', authMdw, userController.getUser)
+
 //CUENTAS
-//Crear => :currency param validos: ars, usd
-userRouter.post('/account/:currency/:userId', [authenticateToken, authorizeToken], accountController.createAccount)
+//Crear => currency param validos: ars/ARS, usd/USD
+userRouter.post('/:userId/account/:currency', authMdw, accountController.createAccount)
 //Ver
-userRouter.get('/account/:userId', [authenticateToken, authorizeToken], accountController.getAccounts)
-//TO-DO => borrar, modificar
+userRouter.get('/:userId/account', authMdw, accountController.getAccounts)
+//Borrar
+userRouter.delete('/:userId/account/:accountId', authMdw, accountController.deleteAccount)
+//Modificar
+userRouter.put('/:userId/account/:accountId', [authMdw, validateAccountUpdate], accountController.updateAccount)
 
 module.exports = userRouter

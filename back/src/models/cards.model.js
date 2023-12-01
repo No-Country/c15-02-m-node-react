@@ -34,7 +34,7 @@ const Card = sequelize.define("Cards", {
   deletedAt: "deletedAt", 
 });
 
-Card.hasMany(Transaction, {onDelete:"CASCADE"})
-Transaction.belongsTo(Card);
+Card.hasMany(Transaction, {onDelete:"CASCADE", foreignKey: { allowNull: false }})
+Transaction.belongsTo(Card, { foreignKey: { allowNull: false } });
 
 module.exports = Card

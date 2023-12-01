@@ -3,38 +3,66 @@ const { sequelize } = require("../config/db.config");
 const Transaction = require("./transactions.model");
 const Card = require("./cards.model");
 
+const Account = sequelize.define(
+  "Accounts",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    moneda: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    tipo: {
+      type: DataTypes.STRING,
+      defaultValue: "ahorro",
+    },
+    balance: {
+      type: DataTypes.DECIMAL(10, 2),
+      defaultValue: 0.0,
+    },
+    activa: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+  },
+  {
+    paranoid: true,
+    timestamps: true,
+    deletedAt: "deletedAt",
+    hooks: {
+      beforeDestroy: async (account, options) => {
+        account.activa = false;
+        await account.save({
+          fields: ["activa"],
+          transaction: options.transaction,
+        });
+      },
+      beforeUpdate: async (account) => {
+        const immutableAttributes = ["moneda", "tipo", "balance"];
+        for (const attribute of immutableAttributes) {
+          if (account.changed(attribute)) {
+            throw new ValidationError(
+              `Cannot modify the ${attribute} attribute`
+            );
+          }
+        }
+      },
+    },
+  }
+);
 
-const Account = sequelize.define("Accounts", {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  moneda: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  tipo: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  balance: {
-    type: DataTypes.DECIMAL(10, 2),
-    defaultValue: 0.0,
-  },
-  estado: {
-    type: DataTypes.STRING,
-    defaultValue: 'activa',
-  },
-},{
-  paranoid: true,
-  timestamps: true, 
-  deletedAt: "deletedAt", 
+Account.hasMany(Transaction, {
+  onDelete: "CASCADE",
+  foreignKey: { allowNull: false },
 });
+Transaction.belongsTo(Account, { foreignKey: { allowNull: false } });
+Account.hasMany(Card, {
+  onDelete: "CASCADE",
+  foreignKey: { allowNull: false },
+});
+Card.belongsTo(Account, { foreignKey: { allowNull: false } });
 
-Account.hasMany(Transaction, { onDelete: "CASCADE" })
-Transaction.belongsTo(Account);
-Account.hasMany(Card, { onDelete: "CASCADE" })
-Card.belongsTo(Account)
-
-module.exports=Account
+module.exports = Account;
