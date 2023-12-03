@@ -44,7 +44,7 @@ const Account = sequelize.define(
         const immutableAttributes = ["moneda", "tipo", "balance"];
         for (const attribute of immutableAttributes) {
           if (account.changed(attribute)) {
-            throw new ValidationError(
+            throw new Error(
               `Cannot modify the ${attribute} attribute`
             );
           }
