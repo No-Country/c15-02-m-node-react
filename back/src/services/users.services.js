@@ -1,4 +1,18 @@
 const { userProvider } = require("../providers/index.providers");
+const bcrypt = require("bcrypt");
+
+const createUser = async (user) => {
+  try {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    console.log(hashedPassword, " user: ",user);
+    user.password = hashedPassword;
+    console.log(user);
+    const createdUser =  await userProvider.createUser(user);
+    return createdUser
+  } catch (error) {
+    throw new Error(error)
+  }
+};
 
 const getUser = async (userId) => {
   try {
@@ -19,4 +33,4 @@ const getAllUsers = async () => {
 };
 
 
-module.exports = { getUser, getAllUsers };
+module.exports = { createUser, getUser, getAllUsers };

@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const HttpResponse = require('../handlers/HttpResponse');
 require("dotenv").config();
 
 
@@ -23,13 +24,13 @@ function authenticateToken(req, res, next) {
 
   try {
     if (!token) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      return HttpResponse.unauthorized(res, { message: 'No autorizado' });
     }
     const decoded = jwt.verify(token, process.env.SESSION_SECRET);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ message: 'Invalid token' });
+    return  HttpResponse.unauthorized(res, { message: 'Sesion invalida' });
   }
 }
 
@@ -39,7 +40,7 @@ function authorizeToken(req, res, next) {
   const requestedUserId = req.params.userId; 
   //Compare user id in session with user id in param
   if (userIdFromToken != requestedUserId) {
-    return res.status(403).json({ message: 'Forbidden - You do not have access to this resource' });
+    return HttpResponse.forbidden(res);
   }
   next();
 }

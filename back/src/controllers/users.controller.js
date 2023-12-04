@@ -1,15 +1,27 @@
+const errorHandler = require("../handlers/ErrorHandler");
+const HttpResponse = require("../handlers/HttpResponse");
 const { userService } = require("../services/index.services");
 
+const createUser = async (req, res) => {
+  try {
+    const newUser = await userService.createUser(req.body);
+    return HttpResponse.created(res, newUser);
+  } catch (error) {
+    return errorHandler(error, res, "Crear usuario")
+  }
+};
+
 const getUser = async (req, res) => {
+  const action = "Buscar usuario"
   try {
     const user = await userService.getUser(req.params.userId);
     if (!user) {
-      res.status(404).json({ action: "Buscar usuario", error: "Usuario no encontrado" });
-    } else {
-      res.status(200).json(user);
-    }
-  } catch (err) {
-    res.status(500).json({ action: "Buscar usuario", error: err.message });
+      return HttpResponse.notFound(res, { action: action, error: "Usuario no encontrado" });
+    } 
+    return HttpResponse.success(res, user);
+    
+  } catch (error) {
+      return HttpResponse.serverError(res, { action: action, error: error });
   }
 };
 
@@ -17,13 +29,13 @@ const getAllUsers = async (req, res) => {
   try {
     const users = await userService.getAllUsers();
     if (!users) {
-      res.status(404).json({ action: "Buscar usuarios", error: "No se encontraron" });
+      return HttpResponse.notFound(res, { action: "Buscar usuarios", message: "No se encontraron" });
     } else {
-      res.status(200).json(users);
+      return HttpResponse.success(res, users);
     }
   } catch (err) {
-    res.status(500).json({ action: "Buscar usuarios", error: err.message });
+      return HttpResponse.serverError(res, { action: "Buscar usuarios", error: err.message });
   }
 }
 
-module.exports = { getUser, getAllUsers };
+module.exports = { createUser, getUser, getAllUsers };

@@ -20,6 +20,9 @@ const getAccounts = async (userId) => {
 
 const updateAccount = async (updates, accountId) => {
   try {
+    if (updates.balance) {
+      delete updates.balance;
+    }
     const accounts = await accountProvider.updateAccount(updates, accountId);
     return accounts;
   } catch (error) {
