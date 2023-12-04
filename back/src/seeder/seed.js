@@ -1,6 +1,7 @@
 //const bcrypt = require("bcrypt");
 const { sequelize } = require("../config/db.config");
 const { User, Account, Card, Transaction } = require("../models/index.models");
+const bcrypt = require("bcrypt");
 
 const seedSQLite = async () => {
   try {
@@ -10,7 +11,7 @@ const seedSQLite = async () => {
     console.log("Connected to the SQLite database");
 
     // Synchronize models with the database (force: true to recreate tables)
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ force: true });
     console.log("Models synchronized with the SQLite database");
 
     // Create users
@@ -19,7 +20,7 @@ const seedSQLite = async () => {
       apellido: "Doe",
       email: "john.doe@example.com",
       dni: "123456789",
-      password: "Pass123"//await bcrypt.hash("password123", 10),
+      password: await bcrypt.hash("Pass123", 10),
     });
 
     const user2 = await User.create({
@@ -27,7 +28,7 @@ const seedSQLite = async () => {
       apellido: "Doe",
       email: "jane.doe@example.com",
       dni: "987654321",
-      password: "Pass123"//await bcrypt.hash("password456", 10),
+      password: await bcrypt.hash("Pass123", 10),
     });
 
     // Create accounts

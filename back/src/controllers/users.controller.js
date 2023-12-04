@@ -1,5 +1,15 @@
+const errorHandler = require("../handlers/ErrorHandler");
 const HttpResponse = require("../handlers/HttpResponse");
 const { userService } = require("../services/index.services");
+
+const createUser = async (req, res) => {
+  try {
+    const newUser = await userService.createUser(req.body);
+    return HttpResponse.created(res, newUser);
+  } catch (error) {
+    return errorHandler(error, res, "Crear usuario")
+  }
+};
 
 const getUser = async (req, res) => {
   const action = "Buscar usuario"
@@ -28,4 +38,4 @@ const getAllUsers = async (req, res) => {
   }
 }
 
-module.exports = { getUser, getAllUsers };
+module.exports = { createUser, getUser, getAllUsers };
