@@ -1,5 +1,15 @@
 const { User } = require("../models/index.models");
 
+const createUser = async (user) => {
+  console.log(user.password)
+  try {
+    const newUser = await User.create(user);
+    console.log(newUser);
+    return newUser;
+  } catch (err) {
+    throw new Error(err)
+  }
+};
 
 const getUser = async (userId) => {
   try {
@@ -19,4 +29,4 @@ const getAllUsers = async () => {
   }
 };
 
-module.exports = { getUser, getAllUsers };
+module.exports = { createUser, getUser, getAllUsers };

@@ -37,9 +37,6 @@ const User = sequelize.define("Users", {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-    validate:{
-      isAlphanumeric:true
-    }
   },
   tutorial:{
     type: DataTypes.BOOLEAN,

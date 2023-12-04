@@ -41,7 +41,7 @@ const Account = sequelize.define(
         });
       },
       beforeUpdate: async (account) => {
-        const immutableAttributes = ["moneda", "tipo", "balance"];
+        const immutableAttributes = ["moneda", "tipo"];
         for (const attribute of immutableAttributes) {
           if (account.changed(attribute)) {
             throw new Error(
