@@ -1,61 +1,69 @@
 const { check } = require("express-validator");
 const checkValidationResult = require("./validator");
 
-
-const validateName = check('nombre')
+const validateName = check(
+  "nombre",
+  "El nombre es requerido y solo acepta letras sin espacios entremedio"
+)
   .trim()
-  .isAlpha()
-  .notEmpty().withMessage('El nombre es requerido');
+  //.notEmpty()//.withMessage('El nombre es requerido')
+  .isAlpha(); //.withMessage('Solo letras')
 
-const validateLastName = check('apellido')
+const validateLastName = check(
+  "apellido",
+  "El apellido es requerido y solo acepta letras sin espacios entremedio"
+)
   .trim()
-  .isAlpha()
-  .notEmpty().withMessage('El apellido es requerido');
+  .isAlpha();
 
-const validateDNI = check('dni')
+const validateDNI = check("dni", "El dni tiene que ser numérico. 9 numeros min")
   .trim()
-  .isInt().withMessage("El dni tiene que ser numérico")
-  .notEmpty().withMessage("Dni requerido")
+  .isInt()
+  .isLength({ min: 7 })
   
 
-const validateTutorial = check('tutorial')
+const validateCuil = check("cuil", "El cuil tiene que ser numérico. 9 numeros min")
   .trim()
+  .isInt()
+  .isLength({ min: 9 })
+  .optional();
+
+const validateTutorial = check("tutorial")
   .isBoolean()
-  .notEmpty().withMessage('Tutorial true/false')
-  .optional()
+  .withMessage("Tutorial true/false")
+  .optional();
 
 const validateEmail = check("email")
   .trim()
-  .notEmpty()
-  .withMessage("Email requerido")
   .isEmail()
   .withMessage("Email invalido");
 
 const validatePassword = check("password")
   .trim()
-  .notEmpty()
-  .withMessage("Contraseña requerida")
-  .isLength({ min: 6 })
+  .matches(/^(?=.*[A-Z])(?=.*[0-9])(?!.*\s).{6,}$/)
   .withMessage("Contraseña de al menos 6 caracteres, 1 número y 1 letra")
-  .matches(/^(?=.*[A-Z])(?=.*[0-9])/)
-  .withMessage(
-    "Contraseña de al menos 6 caracteres, 1 número y 1 letra"
-  );
 
-const validateLogin = [
-  validateEmail, 
-  validatePassword, 
-  checkValidationResult
-];
+const validateLogin = [validateEmail, validatePassword, checkValidationResult];
 
 const validateRegistration = [
-  validateName, 
-  validateLastName, 
-  validateDNI, 
-  validatePassword, 
-  validateEmail, 
+  validateName,
+  validateLastName,
+  validateDNI,
+  validatePassword,
+  validateEmail,
+  validateCuil,
   validateTutorial,
-  checkValidationResult
-]
+  checkValidationResult,
+];
 
-module.exports = { validateLogin, validateRegistration }
+module.exports = {
+  validateLogin,
+  validateRegistration,
+  validateName,
+  validateLastName,
+  validateDNI,
+  validateEmail,
+  validatePassword,
+  validateTutorial,
+  validateCuil,
+};

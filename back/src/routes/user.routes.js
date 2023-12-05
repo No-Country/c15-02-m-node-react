@@ -2,13 +2,19 @@ const express = require('express')
 const { userController, accountController } = require('../controllers/index.controller')
 const { authenticateToken, authorizeToken } = require('../middleware/auth.mdw')
 const { validateAccountUpdate } = require('../middleware/validations/accountValidation')
+const { validateUserUpdate } = require('../middleware/validations/userValidation.mdw')
 const userRouter = express.Router()
 
 const authMdw = [authenticateToken, authorizeToken]
 
 
 //INFO personal
+//ver
 userRouter.get('/:userId', authMdw, userController.getUser)
+//Modificar
+userRouter.put('/:userId', [authMdw, validateUserUpdate], userController.updateUser)
+//Eliminar
+userRouter.delete('/:userId', authMdw, userController.deleteUser)
 
 //CUENTAS
 //Crear => currency param validos: ars/ARS, usd/USD
