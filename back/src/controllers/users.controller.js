@@ -21,21 +21,51 @@ const getUser = async (req, res) => {
     return HttpResponse.success(res, user);
     
   } catch (error) {
-      return HttpResponse.serverError(res, { action: action, error: error });
+      return errorHandler(error, res, action);
   }
 };
 
 const getAllUsers = async (req, res) => {
+  const action = "Buscar usuario"
   try {
     const users = await userService.getAllUsers();
     if (!users) {
-      return HttpResponse.notFound(res, { action: "Buscar usuarios", message: "No se encontraron" });
+      return HttpResponse.notFound(res, { action: action, message: "No se encontraron" });
     } else {
       return HttpResponse.success(res, users);
     }
-  } catch (err) {
-      return HttpResponse.serverError(res, { action: "Buscar usuarios", error: err.message });
+  } catch (error) {
+      return errorHandler(error, res, action);
   }
 }
 
-module.exports = { createUser, getUser, getAllUsers };
+const updateUser = async (req, res) => {
+  const action = "Actualizar usuario"
+  try {
+    if(req.params.userId == req.user.id) {
+      const updatedUser = await userService.updateUser(req.params.userId, req.body);
+      if(updatedUser=="PasswordError") return HttpResponse.badRequest(res, {action, message:"Contraseña incorrecta"})
+      if(!updatedUser) return HttpResponse.notFound(res, {action, message: "Usuario no encontrado"})
+      return HttpResponse.success(res, updatedUser)
+    }
+    return HttpResponse.forbidden(res)
+  } catch (error) {
+    return errorHandler(error, res, action);
+  }
+}
+
+const deleteUser = async(req, res) => {
+  const action = "Eliminar usuario"
+  try {
+    if(req.params.userId == req.user.id) {
+      const deletedUser = await userService.deleteUser(req.params.userId);
+      if(!deletedUser) return HttpResponse.notFound(res, {action, message: "Usuario no encontrado"})
+      return HttpResponse.noContent(res, action)
+    }
+    return HttpResponse.forbidden(res)
+  } catch (error) {
+    return errorHandler(error, res, action);
+  }
+}
+
+module.exports = { createUser, getUser, getAllUsers, updateUser, deleteUser };

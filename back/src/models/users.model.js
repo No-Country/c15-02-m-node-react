@@ -31,8 +31,13 @@ const User = sequelize.define("Users", {
     },
   },
   dni: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
+  },
+  cuil:{
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    unique: true,
   },
   password: {
     type: DataTypes.STRING,

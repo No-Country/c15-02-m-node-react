@@ -93,7 +93,6 @@ const getAllDeletedAccounts = async (req, res) => {
       });
     return HttpResponse.success(res, accounts);
   } catch (error) {
-    console.error(error);
     return HttpResponse.serverError(res, error)
   }
 };
