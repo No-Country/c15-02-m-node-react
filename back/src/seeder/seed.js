@@ -19,7 +19,7 @@ const seedSQLite = async () => {
       nombre: "John",
       apellido: "Doe",
       email: "john.doe@example.com",
-      dni: "123456789",
+      dni: 123456789,
       password: await bcrypt.hash("Pass123", 10),
     });
 
@@ -27,7 +27,7 @@ const seedSQLite = async () => {
       nombre: "Jane",
       apellido: "Doe",
       email: "jane.doe@example.com",
-      dni: "987654321",
+      dni: 987654321,
       password: await bcrypt.hash("Pass123", 10),
     });
 
