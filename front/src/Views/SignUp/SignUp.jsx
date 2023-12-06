@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import './SignUp.css'
+import { useDispatch } from "react-redux";
+import { createUser } from "../../Redux/actions";
+
 
 const validate = (input) => {
   let errors = {};
@@ -37,6 +40,7 @@ const validate = (input) => {
 };
 
 const SignUp = () => {
+  const dispatch = useDispatch();
   const [input, setInput] = useState({
     nombre: "",
     apellido: "",
@@ -57,16 +61,9 @@ const SignUp = () => {
     setErrors(validate(input));
   };
 
-  const onSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setInput({
-      nombre: "",
-      apellido: "",
-      dni: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
+    dispatch(createUser(input));
   };
 
   return (
@@ -78,7 +75,9 @@ const SignUp = () => {
         <h1>Registro</h1>
       </div>
 
-      <form className="sign-up-form" onSubmit={onSubmit}>
+
+      <form className="sign-up-form" onSubmit={handleSubmit}>
+
         <label htmlFor="">Nombre</label>
         <input
           type="text"

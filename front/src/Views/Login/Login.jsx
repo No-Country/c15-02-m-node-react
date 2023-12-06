@@ -29,8 +29,18 @@ const Login = () => {
       [e.target.name]: e.target.value,
     });
 
+
     setErrors(validate(input));
   };
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      setInput({
+        email: "",
+        password: "",
+      })
+    }
+
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -48,7 +58,9 @@ const Login = () => {
       <div>
         <h1>Login</h1>
       </div>
-      <form className="login-form" onSubmit={onSubmit}>
+
+      <form className="login-form" onSubmit={handleSubmit}>  
+
         <label htmlFor="email">Email</label>
         <input
           type="email"
