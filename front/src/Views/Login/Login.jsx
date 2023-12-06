@@ -31,7 +31,7 @@ const Login = () => {
       setErrors(validate(input));
     }
 
-    const onSubmit = (e) => {
+    const handleSubmit = (e) => {
       e.preventDefault();
       setInput({
         email: "",
@@ -49,7 +49,7 @@ const Login = () => {
         <h1>Login</h1>
         <p>Login with</p>
       </div>
-     <form onSubmit={onSubmit}>
+     <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
         <input type="email" name="email" value={input.email} onChange={handleChange} />
         {errors.email !== "" && <p className="error">{errors.email}</p>}
