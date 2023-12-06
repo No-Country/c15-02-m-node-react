@@ -5,7 +5,7 @@ import Home from './Views/Home/Home';
 import Login from './Views/Login/Login';
 import SignUp from './Views/SignUp/SignUp';
 import Header from './Components/Header/Header';
-import Footer from './Components/Footer/Foot';
+import Footer from './Components/Footer/Footer';
 import UserInfo from './Components/UserInfo/UserInfo';
 import Users from './Components/Users/Users';
 
