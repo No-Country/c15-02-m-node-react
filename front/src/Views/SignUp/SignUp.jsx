@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import './SignUp.css'
 
 const validate = (input) => {
   let errors = {};
@@ -69,23 +70,22 @@ const SignUp = () => {
   };
 
   return (
-    <div>
+    <div className="sign-up-container">
       <div>
         <Link to="/landing">Landing</Link>
       </div>
       <div>
         <h1>Registro</h1>
-        <p>Registrate con</p>
       </div>
 
-      <form onSubmit={onSubmit}>
+      <form className="sign-up-form" onSubmit={onSubmit}>
         <label htmlFor="">Nombre</label>
         <input
           type="text"
           name="nombre"
           value={input.nombre}
           onChange={handleChange}
-        />
+          />
         {errors.nombre !== "" && <p className="error">{errors.nombre}</p>}
 
         <label htmlFor="">Apellido</label>
@@ -121,7 +121,7 @@ const SignUp = () => {
           name="password"
           value={input.password}
           onChange={handleChange}
-        />
+          />
         {errors.password !== "" && <p className="error">{errors.password}</p>}
 
         <label htmlFor="">Confirmar contraseña</label>
@@ -130,7 +130,7 @@ const SignUp = () => {
           name="confirmPassword"
           value={input.confirmPassword}
           onChange={handleChange}
-        />
+          />
         {errors.confirmPassword !== "" && (
           <p className="error">{errors.confirmPassword}</p>
         )}
@@ -154,6 +154,7 @@ const SignUp = () => {
         </button>
       </form>
       <div>
+        <p>Registrate con</p>
         <p>google</p>
       </div>
     </div>
