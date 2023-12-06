@@ -8,11 +8,18 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import UserInfo from './Components/UserInfo/UserInfo';
 import Users from './Components/Users/Users';
+import { useGlobalState } from './Context/context';
+import { useEffect } from 'react';
 
 
 function App() {
+  const {handleDarkMode} = useGlobalState() 
+  //Setea modo diurno/nocturo
+  useEffect(()=>{
+    handleDarkMode("no")
+  }, [])
+   
   return (
-
     <div className="app-container">
       <Header />
       <div className="app-content">

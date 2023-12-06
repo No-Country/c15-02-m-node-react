@@ -1,28 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaMoon,FaSun } from "react-icons/fa";
 import './Nav.css'
 import { useNavigate } from 'react-router-dom';
+import { useGlobalState } from '../../Context/context';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 function Nav() {
+  const {darkMode, handleDarkMode} = useGlobalState()
   const navigate = useNavigate()
   const menu = [
     {name:"Inicio", enlace:"/landing", key:1},
     {name:"Nosotros", enlace:"/login", key:2},
     {name:"Tutorial", enlace:"/landing", key:3},
-    {name:"Ingresa", enlace:"/signup", key:4},
+    {name:"Ingresa", enlace:"/signup", key:4}
   ]
-
-  
-  //Cuando este el contexto
-  // const [darkMode, setDarkMode] = useState(false);
-  
-  // function handleDarkMode() {
-  //   setDarkMode(prevDarkMode => {
-  //     document.getElementById('root').classList.add(!prevDarkMode ? 'dark-mode' : 'light-mode');
-  //     document.getElementById('root').classList.remove(!prevDarkMode ? 'light-mode' : 'dark-mode');
-  //     return !prevDarkMode;
-  //   });
-  // }
 
   return (
     <nav className='nav-menu-container'>
@@ -33,10 +24,11 @@ function Nav() {
           )
         })}
       </ul>
-      <div className='nav-icons'>
+      <div className='nav-icons' onClick={handleDarkMode}>
         {/* Dark or light mode */}
-        {/* darkMode ? <FaMoon onClick={handleDarkMode} /> : <FaSun onClick={handleDarkMode}/>*/}
-        <FaMoon size={25}/>
+        <div className='nav-icons-item'>
+          {!darkMode ? <FaMoon size={25}  /> : <FaSun size={25} />}
+        </div>
       </div>
     </nav>
   )
