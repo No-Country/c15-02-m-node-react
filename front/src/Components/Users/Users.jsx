@@ -1,15 +1,16 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getAllUsers } from "../../Redux/actions";
 import UserInfo from "../UserInfo/UserInfo";
 
+// Parent component (e.g., Users.jsx)
+
 const Users = () => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users.users);
+  const users = useSelector((state) => state.users);
 
   useEffect(() => {
-    dispatch(getAllUsers());
+    dispatch(getAllUsers()); // Fetch all users from the store
   }, [dispatch]);
 
   return (
@@ -28,3 +29,4 @@ const Users = () => {
 };
 
 export default Users;
+

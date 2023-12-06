@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom';
 const Nav = () => {
 
     return (
-        <div>
-            <div>
+        <div className="nav">
+            <div className="links">
             <Link to="/home">Home</Link>
+            <Link to="/Landing">Log Out</Link>
             </div>
         </div>
     )   

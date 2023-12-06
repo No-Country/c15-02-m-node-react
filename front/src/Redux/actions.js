@@ -1,51 +1,61 @@
-import { GET_ALL_USERS, GET_USER, ADD_USER } from "./action-types";
+import { GET_ALL_USERS, GET_USER_BY_ID, CREATE_USER, EDIT_USER } from "./action-types";
+import  axios  from 'axios';
 
-let users = [
-  {
-    id: 1,
-    nombre: "Ani",
-    apellido: "Perez",
-    dni: "12345678",
-    email: "bKuZp@example.com",
-    password: "123456",
-  },
-  {
-    id: 2,
-    nombre: "Juan",
-    apellido: "Perez",
-    dni: "12345678",
-    email: "bKuZp@example.com",
-    password: "123456",
-  },
-  {
-    id: 3,
-    nombre: "Pedro",
-    apellido: "Perez",
-    dni: "12345678",
-    email: "bKuZp@example.com",
-    password: "123456",
-  },
-];
+const URL = "http://localhost:4003/"
 
 export const getAllUsers = () => {
-  return {
-    type: GET_ALL_USERS,
-    payload: users,
+  return async function getUsersThunk(dispatch) {
+    // dispatch({ type: 'loading' })
+
+    const res = await axios.get(`${URL}user`);
+    console.log(res.data);
+
+    dispatch({ type: GET_ALL_USERS, payload: res.data });
   };
 };
 
-export const getUser = (id) => {
-  return {
-    type: GET_USER,
-    payload: users.find((user) => user.id === id),
+export const getById = (userId) => {
+  const endpoint = `http://localhost:4003/user/${userId}`;
+  return async (dispatch) => {
+    try {
+      const { data } = await axios(endpoint);
+      return dispatch({
+        type: GET_USER_BY_ID,
+        payload: data,
+      });
+    } catch (error) {
+      return { error: `No hay un usuario con el siguiente ID: "${userId}"` };
+    }
   };
-}
+};
 
-export const addUser = (user) => {
-  return {
-    type: ADD_USER,
-    payload: user,
+export const createUser = (user) => {
+  return async function createUserThunk(dispatch) {
+    try {
+      // dispatch({ type: 'loading' })
+      const res = await axios.post(`${URL}register`, user);
+      console.log(res.data);
+      dispatch({ type: CREATE_USER, payload: res.data });
+    } catch (error) {
+      console.error("Error creating user:", error);
+     
+    }
   };
+};
+
+
+export const editUser = (user) => {
+  return async function editUserThunk(dispatch) {
+    // dispatch({ type: 'loading' })
+
+    const res = await axios.put(`${URL}user`, user);
+    console.log(res.data);
+
+    dispatch({ type: EDIT_USER, payload: res.data });
+  }
 }
+  
+
+
 
 
