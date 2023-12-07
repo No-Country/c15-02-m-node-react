@@ -6,7 +6,7 @@ import money from "../../assets/money.png";
 import spend from "../../assets/spend.png";
 import "../../index.css";
 import "./Home.css";
-import Slider from "../../components/Slider/Slider";
+import Slider from "../../Components/Slider/Slider";
 import { Link } from "react-router-dom";
 
 function Home() {
