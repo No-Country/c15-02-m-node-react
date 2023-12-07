@@ -1,8 +1,7 @@
 const UserInfo = ({ nombre, apellido, dni, email }) => {
   return (
     <div>
-      <h2>Nombre: {nombre}</h2>
-      <h2>Apellido: {apellido}</h2>
+      <h3>Nombre completo: {nombre} {apellido}</h3>
       <p>DNI: {dni}</p>
       <p>Email: {email}</p>
     </div>
