@@ -4,6 +4,7 @@
   const AppContext = createContext()
 
   const AppProvider = ({children}) => {
+    const API_URL = 'http://localhost:4003'
     const [showLinks, setShowLinks]= useLocalStorage('showLinks', false)
     const [darkMode, setDarkMode] = useLocalStorage('darkMode', false);
 
@@ -20,7 +21,7 @@
     return <AppContext.Provider value={{
       showLinks,setShowLinks,
       darkMode,setDarkMode,
-      handleDarkMode
+      handleDarkMode, API_URL
       }} >
         {children}
     </AppContext.Provider>

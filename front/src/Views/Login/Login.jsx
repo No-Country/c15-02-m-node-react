@@ -84,7 +84,7 @@ const Login = () => {
         </button>
         <p>¿No tienes cuenta? Ingresa <Link to={'/signup'}>aquí</Link></p>
       </form>
-      <div>
+      <div className="login-google">
         <p>Login with</p>
         <p>google</p>
       </div>
