@@ -9,10 +9,10 @@ function Nav() {
   const {darkMode, handleDarkMode} = useGlobalState()
   const navigate = useNavigate()
   const menu = [
-    {name:"Inicio", enlace:"/landing", key:1},
-    {name:"Nosotros", enlace:"/login", key:2},
-    {name:"Tutorial", enlace:"/landing", key:3},
-    {name:"Ingresa", enlace:"/signup", key:4}
+    {name:"Inicio", enlace:"/home", key:1},
+    {name:"Nosotros", enlace:"/about", key:2},
+    {name:"Tutorial", enlace:"/tutorial", key:3},
+    {name:"Ingresa", enlace:"/login", key:4}
   ]
 
   return (
