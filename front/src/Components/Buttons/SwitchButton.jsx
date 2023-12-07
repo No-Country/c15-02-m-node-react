@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import './SwitchButton.css'; 
+import useLocalStorage from '../../hooks/useLocalStorage';
 
-const SwitchButton = () => {
-  const [switchIsOn, setswitchIsOn] = useState(false);
+
+const SwitchButton = ({ onToggle }) => {
+  const [switchIsOn, setswitchIsOn] = useLocalStorage("switch",false);
 
   const handleClick = () => {
     setswitchIsOn(!switchIsOn);
+    onToggle()
   };
-
-  //Cuando este el contexto
-  //setNavBar(!navBar) => Aparece y desaparece la nav
 
   return (
     <div

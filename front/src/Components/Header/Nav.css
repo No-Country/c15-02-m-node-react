@@ -38,3 +38,20 @@
 .nav-menu-item:hover::after {
   transform: scaleX(1); /* Show the underline on hover */
 }
+
+.nav-icons{
+  display: flex;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+}
+.nav-icons:hover{
+  background-color: rgba(128, 128, 128, 0.3);
+}
+
+.nav-icons-item{
+  margin-top: 20%;
+  padding: 2px;
+  align-self:center;
+}
