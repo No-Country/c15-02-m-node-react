@@ -3,8 +3,8 @@ require('dotenv').config()
 
 const ACCEPTED_ORIGINS = [
   `${process.env.CORS}`,
-  "https://c15-02-m-node-react.vercel.app/"
-]
+  "https://c15-02-m-node-react.vercel.app",
+];
 
 const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) => cors({
   origin: (origin, callback) => {
