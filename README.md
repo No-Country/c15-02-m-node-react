@@ -4,7 +4,7 @@ Se trata de una WebApp, qué en un ambiente amigable y gamificado, permita a usu
 En primera instancia se se ha hecho un bosquejo de la arquitectura, que se usará en el desarrollo de >"FinanzApp Educa".
 https://drive.google.com/file/d/1e9lxejlaTQtvgDlYI1fJELP02eTjl4Pe/view?usp=sharing
 
-Como punto de partida, tomamos las User Sories, para desarrollar la App.
+Como punto de partida, tomamos las User Stories, para desarrollar la App.
 https://docs.google.com/document/d/18-uE8V2YxNcCskY8GylrJHcNWAW1vCfo/edit?usp=sharing&ouid=112324589982317818877&rtpof=true&sd=true
 
 Se ha comenzado a dar la estrucura de páginas que tendrá la WebApp. 
