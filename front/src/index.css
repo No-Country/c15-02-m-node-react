@@ -44,7 +44,6 @@ body {
 body {
   display: flex;
   flex-direction: column;
-  text-align: center;
   flex: 1;
   flex-grow: 1;
 }
@@ -52,6 +51,7 @@ body {
 #root{
   display: flex;
   flex: 1;
+  overflow-x: hidden;
 }
 
 /* Light mode */
@@ -93,4 +93,12 @@ a {
 a:hover,
 a:active {
   color: inherit; 
+}
+
+
+@media screen and (max-width: 425px) {
+  /* Add your responsive styles here */
+  #root{
+    width: fit-content;
+  }
 }

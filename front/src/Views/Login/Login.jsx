@@ -53,9 +53,6 @@ const Login = () => {
   return (
     <div className="login-container">
       <div>
-        <Link to="/landing">Landing</Link>
-      </div>
-      <div>
         <h1>Login</h1>
       </div>
 
@@ -85,6 +82,7 @@ const Login = () => {
         >
           Login
         </button>
+        <p>¿No tienes cuenta? Ingresa <Link to={'/signup'}>aquí</Link></p>
       </form>
       <div>
         <p>Login with</p>
