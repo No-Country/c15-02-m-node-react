@@ -7,7 +7,7 @@ const testimonies = [
   { id: 3, name: 'Alice Johnson', quote: 'Vestibulum eu erat non nisi consequat suscipit.', image: 'src/assets/alesia.jpg' },
 ];
 
-const TestimoniesSlider = () => {
+const Slider = () => {
   const [currentTestimony, setCurrentTestimony] = useState(0);
   const intervalRef = useRef(null);
 
@@ -53,4 +53,4 @@ const TestimoniesSlider = () => {
   );
 };
 
-export default TestimoniesSlider;
+export default Slider;
