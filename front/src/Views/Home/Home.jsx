@@ -6,7 +6,7 @@ import money from "../../assets/money.png";
 import spend from "../../assets/spend.png";
 import "../../index.css";
 import "./Home.css";
-import TestimoniesSlider from "../../components/Slider/Slider";
+import Slider from "../../components/Slider/Slider";
 import { Link } from "react-router-dom";
 
 function Home() {
@@ -101,7 +101,7 @@ function Home() {
       <section className="companies-involved">
         <h2>Testimonios</h2>
         <hr />
-        <TestimoniesSlider />
+        <Slider />
       </section>
     </div>
   );
