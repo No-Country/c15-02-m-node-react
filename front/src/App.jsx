@@ -10,6 +10,7 @@ import Users from './Components/Users/Users';
 import { useGlobalState } from './Context/context';
 import { useEffect } from 'react';
 import Error from './Views/404/Error';
+import Tutorial from './Views/Tutorial/Tutorial';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/tutorial" element={<Tutorial />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/users" element={<Users />}/>
