@@ -38,22 +38,24 @@
 
 
 .control-button {
-  background-color: var(--clr-font-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
   color: var(--textColor);
   border: none;
   margin: 1rem;
   border-radius: 10px;
   padding: 10px 20px;
-  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  box-shadow: 0px 0px 10px black;
-  width: 10px; /* Add a fixed width to the buttons */
-  height: 50px;
+  width: 10px;
+  height: 100px;
 }
 
 .control-button:hover {
-  background-color: var(--clr-dark-font);
+  background-color: rgb(0, 0, 0, 0.4);
   box-shadow: 0px 0px 10px white;
 }
 

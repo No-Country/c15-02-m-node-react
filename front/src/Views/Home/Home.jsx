@@ -101,7 +101,7 @@ function Home() {
       <section className="companies-involved">
         <h2>Testimonios</h2>
         <hr />
-        <Slider />
+        <Slider/>
       </section>
     </div>
   );
