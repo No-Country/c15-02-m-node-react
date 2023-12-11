@@ -33,12 +33,12 @@ export const createUser = (user) => {
   return async function createUserThunk(dispatch) {
     try {
       // dispatch({ type: 'loading' })
-      const res = await axios.post(`${URL}register`, user);
+      const res = await axios.post(`${URL}auth/register`, user);
       console.log(res.data);
       dispatch({ type: CREATE_USER, payload: res.data });
     } catch (error) {
       console.error("Error creating user:", error);
-     
+      throw new Error(error)
     }
   };
 };

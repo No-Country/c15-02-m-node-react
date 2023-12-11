@@ -232,14 +232,13 @@ p {
 
 .subscription {
   width: 100%;
-  padding: 1rem;
   margin: auto;
   background-color: var(--clr-grey-light);
 }
 
 .subscription-content {
   text-align: center;
-  margin: auto;
+  margin: 2rem auto;
   width: 60%;
 }
 

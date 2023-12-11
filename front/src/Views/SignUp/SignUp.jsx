@@ -1,43 +1,9 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import './SignUp.css'
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import "./SignUp.css";
 import { useDispatch } from "react-redux";
 import { createUser } from "../../Redux/actions";
-
-
-const validate = (input) => {
-  let errors = {};
-  if (!input.nombre) {
-    errors.nombre = "El nombre es requerido";
-  } else if (!/^[a-zA-Z\s]*$/.test(input.nombre)) {
-    errors.nombre = "El nombre solo puede contener letras";
-  }
-  if (!input.apellido) {
-    errors.apellido = "El apellido es requerido";
-  } else if (!/^[a-zA-Z\s]*$/.test(input.apellido)) {
-    errors.apellido = "El apellido solo puede contener letras";
-  }
-  if (!input.dni) {
-    errors.dni = "El dni es requerido";
-  } else if (!/^[0-9]*$/.test(input.dni)) {
-    errors.dni = "El dni solo puede contener números";
-  }
-  if (!input.email) {
-    errors.email = "El email es requerido";
-  } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.email = "El email no es válido";
-  }
-  if (!input.password) {
-    errors.password = "La contraseña es requerida";
-  } else if (input.password.length < 6) {
-    errors.password = "La contraseña debe tener al menos 6 caracteres";
-  }
-  if (input.password !== input.confirmPassword) {
-    errors.confirmPassword = "Las contraseñas no coinciden";
-  }
-
-  return errors;
-};
+import validate from "../../utils/validateSignUp";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -49,21 +15,57 @@ const SignUp = () => {
     password: "",
     confirmPassword: "",
   });
-
+  const [trigger, setTrigger] = useState(0);
+  const navigate = useNavigate()
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
-    setInput({
-      ...input,
+    setInput((prevInput) => ({
+      ...prevInput,
       [e.target.name]: e.target.value,
-    });
-
-    setErrors(validate(input));
+    }));
+    setTrigger((prev) => prev + 1);
   };
+
+  useEffect(() => {
+    if (trigger > 0) {
+      setErrors(validate(input));
+    }
+  }, [input]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createUser(input));
+    
+    dispatch(createUser(input))
+      .then(() => {
+        setInput({
+          nombre: "",
+          apellido: "",
+          dni: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
+        setTrigger(0)
+        navigate('/login')
+      })
+      .catch((error) => {
+        console.error("Catch login",error);
+        setTimeout(() => {
+          setErrors({
+            ...errors,
+            register: "Registro inválido. Intente nuevamente con otro email.",
+          });
+          setTimeout(() => {
+            setErrors((prevErrors) => ({
+              ...prevErrors,
+              register: "",
+            }));
+          }, 3000);
+        }, 0);
+      }).finally(()=>{
+        setTrigger(0)
+      })
   };
 
   return (
@@ -72,17 +74,17 @@ const SignUp = () => {
         <h1>Registro</h1>
       </div>
 
-
       <form className="sign-up-form" onSubmit={handleSubmit}>
-
         <label htmlFor="">Nombre</label>
         <input
           type="text"
           name="nombre"
           value={input.nombre}
           onChange={handleChange}
-          />
-        {errors.nombre !== "" && <p className="error">{errors.nombre}</p>}
+        />
+        {errors.nombre !== "" && (
+          <p className="p-login-error">{errors.nombre}</p>
+        )}
 
         <label htmlFor="">Apellido</label>
         <input
@@ -91,7 +93,9 @@ const SignUp = () => {
           value={input.apellido}
           onChange={handleChange}
         />
-        {errors.apellido !== "" && <p className="error">{errors.apellido}</p>}
+        {errors.apellido !== "" && (
+          <p className="p-login-error">{errors.apellido}</p>
+        )}
 
         <label htmlFor="">DNI</label>
         <input
@@ -100,7 +104,7 @@ const SignUp = () => {
           value={input.dni}
           onChange={handleChange}
         />
-        {errors.dni !== "" && <p className="error">{errors.dni}</p>}
+        {errors.dni !== "" && <p className="p-login-error">{errors.dni}</p>}
 
         <label htmlFor="">Email</label>
         <input
@@ -109,7 +113,7 @@ const SignUp = () => {
           value={input.email}
           onChange={handleChange}
         />
-        {errors.email !== "" && <p className="error">{errors.email}</p>}
+        {errors.email !== "" && <p className="p-login-error">{errors.email}</p>}
 
         <label htmlFor="">Contraseña</label>
         <input
@@ -117,8 +121,10 @@ const SignUp = () => {
           name="password"
           value={input.password}
           onChange={handleChange}
-          />
-        {errors.password !== "" && <p className="error">{errors.password}</p>}
+        />
+        {errors.password !== "" && (
+          <p className="p-login-error">{errors.password}</p>
+        )}
 
         <label htmlFor="">Confirmar contraseña</label>
         <input
@@ -126,12 +132,29 @@ const SignUp = () => {
           name="confirmPassword"
           value={input.confirmPassword}
           onChange={handleChange}
-          />
+        />
         {errors.confirmPassword !== "" && (
-          <p className="error">{errors.confirmPassword}</p>
+          <p className="p-login-error">{errors.confirmPassword}</p>
         )}
         <button
           type="submit"
+          className={`
+          sign-up-button ${
+            !input.nombre ||
+            !input.apellido ||
+            !input.dni ||
+            !input.email ||
+            !input.password ||
+            !input.confirmPassword ||
+            errors.apellido ||
+            errors.dni ||
+            errors.email ||
+            errors.password ||
+            errors.confirmPassword
+              ? "disabled-button"
+              : ""
+          }
+        `}
           disabled={
             !input.nombre ||
             !input.apellido ||
@@ -148,12 +171,15 @@ const SignUp = () => {
         >
           Sign Up
         </button>
-        <p>¿Ya tienes cuenta? Ingresa <Link to={'/login'}>aquí</Link></p>
+        {errors.register !== "" && <p className="p-login-error">{errors.register}</p>}
+        <p>
+          ¿Ya tienes cuenta? Ingresa <Link to={"/login"}>aquí</Link>
+        </p>
       </form>
-      <div>
+      {/* <div>
         <p>Registrate con</p>
         <p>google</p>
-      </div>
+      </div> */}
     </div>
   );
 };
