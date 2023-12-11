@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
-import Insertion from '../../Components/Tutorial/Insertion';
+import React from 'react';
 import './Tutorial.css'
-import validateInput from '../../utils/validation';
 import Steps from '../../Components/Tutorial/Steps';
 import { useTutorialState } from '../../Context/tutorialContext';
 
 function Tutorial() {
   const {tasks, currentTask} = useTutorialState()
-  console.log(tasks.length);
-  console.log(currentTask);
+ 
   return (
     <main className='tutorial-container'>
       <div className='tutorial-title'>

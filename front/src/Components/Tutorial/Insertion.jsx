@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { FaRegArrowAltCircleRight } from 'react-icons/fa';
-import { useTutorialState } from '../../Context/tutorialContext';
+import React, { useState } from "react";
+import { FaRegArrowAltCircleRight } from "react-icons/fa";
+import { useTutorialState } from "../../Context/tutorialContext";
 
 function Insertion({ name, type, onSubmit, isValid }) {
-  const [input, setInput] = useState('');
-  const { handleCompleted } = useTutorialState()
+  const [input, setInput] = useState("");
+  const { handleCompleted } = useTutorialState();
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
     setInput(inputValue);
@@ -13,29 +13,26 @@ function Insertion({ name, type, onSubmit, isValid }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     //Calls submit from context
-    try {
-      onSubmit(input, type);
-      setInput("")
-      
-    } catch (error) {
-      console.error(error);
-    }
+    onSubmit(input, type);
+    setInput("");
   };
 
   return (
     <div>
       <h3>{name}</h3>
-      {type != "finished" ? <form onSubmit={handleSubmit}>
-        <input type={type} value={input} onChange={handleInputChange} />
-        <button type="submit">
-          <FaRegArrowAltCircleRight />
-        </button>
-        {!isValid && <p>Ingreso inválido</p>}
-      </form> : 
-      <div>
-        <button onClick={()=>handleCompleted()}>Siguiente</button>
-      </div>
-      }
+      {type != "finished" ? (
+        <form onSubmit={handleSubmit}>
+          <input type={type} value={input} onChange={handleInputChange} />
+          <button type="submit">
+            <FaRegArrowAltCircleRight />
+          </button>
+          {!isValid && <p>Ingreso inválido</p>}
+        </form>
+      ) : (
+        <div>
+          <button onClick={() => handleCompleted()}>Siguiente</button>
+        </div>
+      )}
     </div>
   );
 }
