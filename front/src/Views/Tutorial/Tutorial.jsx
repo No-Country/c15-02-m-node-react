@@ -1,57 +1,25 @@
-import React, { useState } from 'react';
-import Insertion from '../../Components/Tutorial/Insertion';
+import React from 'react';
 import './Tutorial.css'
-import validateInput from '../../utils/validation';
+import Steps from '../../Components/Tutorial/Steps';
+import { useTutorialState } from '../../Context/tutorialContext';
 
 function Tutorial() {
-  const steps = [
-    { type: 'text', label: 'Nombre' },
-    { type: 'text', label: 'Apellido' },
-    { type: 'email', label: 'Email' },
-    { type: 'number', label: 'DNI' },
-    { type: 'password', label: 'Password' },
-  ];
-
-  const [currentStep, setCurrentStep] = useState(0);
-  const [isStepValid, setStepValid] = useState(true);
-
-  const handleStepSubmit = (input) => {
-    // Validate the input of the current step
-    const isValid = validateInput(input, steps[currentStep].type);
-    setStepValid(isValid);
-
-    if (isValid) {
-      // Move to the next step if the input is valid
-      setCurrentStep(currentStep + 1);
-      setStepValid(true);
-    }
-  };
-
-  const handleInputChange = (event) => {
-    const inputValue = event.target.value;
-    setInput(inputValue);
-  };
-
+  const {tasks, currentTask} = useTutorialState()
+ 
   return (
     <main className='tutorial-container'>
       <div className='tutorial-title'>
         <h1>Tutorial</h1>
         <hr />
       </div>
-      {currentStep < steps.length ? (
+      {currentTask < tasks.length ? (
         <section>
-          <h2>{steps[currentStep].label}</h2>
-          <Insertion
-            type={steps[currentStep].type}
-            onInputChange={handleInputChange}
-            onSubmit={handleStepSubmit}
-            isValid={isStepValid}
-          />
+          <Steps />
         </section>
       ) : (
         <div>
-          <h2>Tutorial Completed</h2>
-          <p>Congratulations! You have completed the tutorial.</p>
+          <h2>Tutorial Completo</h2>
+          <p>Felicitaciones! Completaste el tutorial.</p>
         </div>
       )}
     </main>
