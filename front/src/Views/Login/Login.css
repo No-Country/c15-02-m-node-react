@@ -32,7 +32,7 @@
   border-radius: 5px;
 }
 
-.login-form button {
+.login-button {
   width: 90%;
   padding: 10px;
   background-color: #007bff;
@@ -44,7 +44,7 @@
   margin-bottom: 10px;
 }
 
-.login-form button:hover {
+.login-button:hover {
   background-color: #0056b3;
 }
 
@@ -65,4 +65,11 @@
 
 .login-google{
   margin-bottom: 2rem;
+}
+
+.disabled-button {
+  background-color: #ccc;
+  color: #888;
+  cursor: not-allowed;
+  /* Add any other styles you want for a disabled button */
 }

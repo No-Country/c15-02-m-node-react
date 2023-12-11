@@ -1,53 +1,69 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Login.css";
+import validate from "../../utils/validateLogin";
+import useLogin from "../../hooks/useLogin";
+import Spinner from "../../Components/Spinner/Spinner";
 
-const validate = (input) => {
-  let errors = {};
-  if (!input.email) {
-    errors.email = "El email es requerido";
-  } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.email = "El email no es válido";
-  }
-  if (!input.password) {
-    errors.password = "La contraseña es requerida";
-  } else if (input.password.length < 6) {
-    errors.password = "La contraseña debe tener al menos 6 caracteres";
-  }
-  return errors;
-};
 const Login = () => {
+  const [errors, setErrors] = useState({});
   const [input, setInput] = useState({
     email: "",
     password: "",
   });
+  const [trigger, setTrigger] = useState(0);
+  const { login, isLoading } = useLogin();
 
-  const [errors, setErrors] = useState({});
   const handleChange = (e) => {
-    setInput({
-      ...input,
+    setInput((prevInput) => ({
+      ...prevInput,
       [e.target.name]: e.target.value,
-    });
-
-
-    setErrors(validate(input));
+    }));
+    setTrigger((prev) => prev + 1);
   };
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
+  useEffect(() => {
+    if (trigger > 0) {
+      setErrors(validate(input));
+    }
+  }, [input]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const success = await login(input.email, input.password);
+
+      if (success) {
+        // Handle the successful login
+        console.log("Login successful");
+
+        // Clear the form inputs
+        setInput({
+          email: "",
+          password: "",
+        });
+      }
+    } catch (error) {
+      setTimeout(() => {
+        setErrors({
+          ...errors,
+          login: "Login inválido. Intente nuevamente.",
+        });
+        setTimeout(() => {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            login: "",
+          }));
+        }, 3000);
+      }, 0);
+    } finally {
+      setTrigger(0);
       setInput({
         email: "",
         password: "",
-      })
+      });
     }
-
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setInput({
-      email: "",
-      password: "",
-    });
   };
 
   return (
@@ -56,8 +72,7 @@ const Login = () => {
         <h1>Login</h1>
       </div>
 
-      <form className="login-form" onSubmit={handleSubmit}>  
-
+      <form className="login-form" onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
         <input
           type="email"
@@ -73,21 +88,33 @@ const Login = () => {
           value={input.password}
           onChange={handleChange}
         />
-        {errors.password !== "" && <p className="p-login-error">{errors.password}</p>}
+        {errors.password !== "" && (
+          <p className="p-login-error">{errors.password}</p>
+        )}
         <button
           type="submit"
+          className={`
+            login-button ${
+              !input.email || !input.password || errors.email || errors.password
+                ? "disabled-button"
+                : ""
+            }
+          `}
           disabled={
             !input.email || !input.password || errors.email || errors.password
           }
         >
-          Login
+          {isLoading ? <Spinner /> : "Login"}
         </button>
-        <p>¿No tienes cuenta? Ingresa <Link to={'/signup'}>aquí</Link></p>
+        {errors.login !== "" && <p className="p-login-error">{errors.login}</p>}
+        <p>
+          ¿No tienes cuenta? Ingresa <Link to={"/signup"}>aquí</Link>
+        </p>
       </form>
-      <div className="login-google">
+      {/* <div className="login-google">
         <p>Login with</p>
         <p>google</p>
-      </div>
+      </div> */}
     </div>
   );
 };

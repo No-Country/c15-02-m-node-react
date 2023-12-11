@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Slider.css'
 
 const testimonies = [
-  { id: 1, name: 'John Doe', quote: "FinanzApp Educa simplificó mi vida financiera. Funciones avanzadas fáciles de usar. La educación integrada hizo que invertir sea accesible y emocionante.", image: 'src/assets/manos.jpg' },
-  { id: 2, name: 'Jane Smith', quote: "Como novato en finanzas online, FinanzApp Educa me guió con tutoriales simples. Ahora, tomo decisiones financieras informadas con confianza. ¡Increíblemente educativo!", image: 'src/assets/tim.jpg' },
-  { id: 3, name: 'Alice Johnson', quote: "FinanzApp Educa no solo me dio acceso a servicios financieros, sino que me educó en el proceso. Ahora me siento parte integral del mundo financiero digital.", image: 'src/assets/alesia.jpg' },
+  { id: 1, name: 'John Doe', quote: "FinanzApp Educa simplificó mi vida financiera. Funciones avanzadas fáciles de usar. La educación integrada hizo que invertir sea accesible y emocionante.", image: 'src/assets/man.png' },
+  { id: 2, name: 'Jane Smith', quote: "Como novato en finanzas online, FinanzApp Educa me guió con tutoriales simples. Ahora, tomo decisiones financieras informadas con confianza. ¡Increíblemente educativo!", image: 'src/assets/woman2.png' },
+  { id: 3, name: 'Alice Johnson', quote: "FinanzApp Educa no solo me dio acceso a servicios financieros, sino que me educó en el proceso. Ahora me siento parte integral del mundo financiero digital.", image: 'src/assets/woman.png' },
 ];
 
 const Slider = () => {
