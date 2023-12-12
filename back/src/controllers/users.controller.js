@@ -68,4 +68,15 @@ const deleteUser = async(req, res) => {
   }
 }
 
-module.exports = { createUser, getUser, getAllUsers, updateUser, deleteUser };
+const recoverUser = async(req, res) => {
+  const action = "Recuperar usuario"
+  try {
+    const user = await userService.recoverUser(req.params.userId);
+    if(!user) return HttpResponse.notFound(res, {action, message: "Usuario no encontrado"})
+    return HttpResponse.success(res, user)
+  } catch (error) {
+    return errorHandler(error, res, action);
+  }
+}
+
+module.exports = { createUser, getUser, getAllUsers, updateUser, deleteUser, recoverUser };

@@ -50,5 +50,13 @@ const deleteUser = async (userId) => {
   }
 }
 
+const recoverUser = async (userId) => {
+  try {
+    const user = await userProvider.recoverUser(userId);
+    return user;
+  } catch (error) {
+    throw new Error(error)
+  }
+}
 
-module.exports = { createUser, getUser, getAllUsers, updateUser, deleteUser };
+module.exports = { createUser, getUser, getAllUsers, updateUser, deleteUser, recoverUser };
