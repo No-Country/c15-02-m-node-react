@@ -14,7 +14,7 @@ const authRouter = express.Router();
 
 authRouter.post("/login", validateLogin, authController.validateUser);
 authRouter.post("/register", validateRegistration, userController.createUser);
-authRouter.post("/token", authenticateToken, (req, res) => {
-  return HttpResponse.noContent(res);
+authRouter.get("/token", authenticateToken, (req, res) => {
+  return HttpResponse.success(res);
 });
 module.exports = authRouter;
