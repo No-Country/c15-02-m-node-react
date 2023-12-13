@@ -5,6 +5,7 @@ import "./Login.css";
 import validate from "../../utils/validateLogin";
 import useLogin from "../../hooks/useLogin";
 import Spinner from "../../Components/Spinner/Spinner";
+import { useGlobalState } from '../../Context/context';
 
 const Login = () => {
   const [errors, setErrors] = useState({});
@@ -15,6 +16,7 @@ const Login = () => {
   const [trigger, setTrigger] = useState(0);
   const { login, isLoading } = useLogin();
   const navigate = useNavigate();
+  const { loggedUser } = useGlobalState(); 
 
   const handleChange = (e) => {
     setInput((prevInput) => ({
@@ -29,6 +31,12 @@ const Login = () => {
       setErrors(validate(input));
     }
   }, [input]);
+
+  useEffect(() => {
+    if(loggedUser){
+      navigate("/logout");
+    }
+  },[loggedUser])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -106,7 +114,7 @@ const Login = () => {
             !input.email || !input.password || errors.email || errors.password
           }
         >
-          {isLoading ? <Spinner /> : "Login"}
+          {isLoading ? <Spinner /> : "Ingresar"}
         </button>
         {errors.login !== "" && <p className="p-login-error">{errors.login}</p>}
         <p>

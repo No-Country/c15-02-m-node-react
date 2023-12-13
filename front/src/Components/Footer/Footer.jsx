@@ -1,13 +1,14 @@
 import React from "react";
 import "./Footer.css";
 import { FaApple, FaFacebook, FaGooglePlay, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
     <footer>
       <div className="footer-content">
         <div className="column">
-          <p className="footer-logo">FinanzApp</p>
+          <p className="footer-logo"><Link to={'/home'}>FinanzApp</Link></p>
         </div>
         <div className="column column-2">
           <p>Seguinos:</p>
@@ -19,8 +20,8 @@ function Footer() {
         </div>
         <div className="column">
           <ul className="footer-icons footer-store-icons">
-            <li><FaGooglePlay size={20}/></li>
-            <li><FaApple size={20}/></li>
+            <li><Link to={'#'}><FaGooglePlay size={20}/></Link></li>
+            <li><Link to={'#'}><FaApple size={25}/></Link></li>
           </ul>
         </div>
       </div>

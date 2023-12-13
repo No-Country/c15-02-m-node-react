@@ -46,6 +46,10 @@
   align-items: center;
 }
 
+.sidebar-nav a{
+  cursor: pointer;
+}
+
 .icon {
   font-size: 24px;
   margin-right: 10px;
