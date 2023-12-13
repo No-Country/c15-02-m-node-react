@@ -4,8 +4,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%; 
   margin-top: 1rem;
+  margin-bottom: 2rem;
 }
 
 .login-form {
@@ -63,9 +63,9 @@
   color: var(--clr-danger-dark);
 }
 
-.login-google{
+/* .login-google{
   margin-bottom: 2rem;
-}
+} */
 
 .disabled-button {
   background-color: #ccc;

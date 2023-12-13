@@ -17,8 +17,9 @@ const useLogin = () => {
       
       if (response.status === 200) {  
         // Store the token in local storage
+        console.log(`guardando token ${response.data.data.token}`);
         localStorage.setItem("token", response.data.data.token);
-        localStorage.setItem("user", response.data.data.user)
+        localStorage.setItem("user", JSON.stringify(response.data.data.user))
         return true;
       } else {
         throw new Error("Login failed");
