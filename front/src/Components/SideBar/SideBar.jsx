@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FiUser, FiBriefcase, FiDollarSign } from 'react-icons/fi';
-import { MdOpenInFull } from "react-icons/md";
+import { MdOpenInFull, MdOutlineClose  } from "react-icons/md";
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -14,6 +14,9 @@ const Sidebar = () => {
     <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       {isOpen ? (
         <>
+           <button className="side-btn close-btn" onClick={toggleSidebar}>
+            <MdOutlineClose size={30}/>
+          </button>
           <nav className="sidebar-nav">
             <ul>
               <li>
@@ -36,13 +39,13 @@ const Sidebar = () => {
               </li>
             </ul>
           </nav>
-          <button className="close-btn" onClick={toggleSidebar}>
-            &times;
-          </button>
         </>
       ) : (
         <>
-          <nav className="sidebar-nav">
+          <button className="side-btn open-btn" onClick={toggleSidebar}>
+            <MdOpenInFull size={30}/>
+          </button>
+          <nav className="sidebar-nav sidebar-nav-closed">
             <ul>
               <li>
                 <a href="#">
@@ -61,9 +64,6 @@ const Sidebar = () => {
               </li>
             </ul>
           </nav>
-          <button className="open-btn" onClick={toggleSidebar}>
-            <MdOpenInFull size={30}/>
-          </button>
         </>
       )}
     </aside>
