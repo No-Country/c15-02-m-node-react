@@ -21,7 +21,6 @@ function authenticateToken(req, res, next) {
   }
   // Use the token from the cookie or the header, if available
   const token = cookieToken || headerToken;
-
   try {
     if (!token) {
       return HttpResponse.unauthorized(res, { message: 'No autorizado' });
