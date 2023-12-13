@@ -53,4 +53,13 @@ const deleteUser = async (userId) => {
   }
 };
 
-module.exports = { createUser, getUser, getAllUsers, updateUser, deleteUser };
+const recoverUser = async (userId) => {
+  try {
+    const deletedUser = await User.restore({ where: { id: userId } });
+    if (!deletedUser) return null;
+    return deletedUser
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+module.exports = { createUser, getUser, getAllUsers, updateUser, deleteUser, recoverUser };
