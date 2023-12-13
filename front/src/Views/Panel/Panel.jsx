@@ -7,15 +7,19 @@ import Sidebar from "../../Components/SideBar/SideBar";
 import UserInfo from "../../Components/Panel/UserInfo";
 import AccountInfo from "../../Components/Panel/AccountInfo";
 import TransactionInfo from "../../Components/Panel/TransactionsInfo";
+import { useGlobalState } from "../../Context/context";
 
 function Panel() {
   const { ping, isLoading } = usePing();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const [choice, setChoice] = useState('profile')
+  const [choice, setChoice] = useState("profile");
+  const { loggedUser, setLoggedUser } = useGlobalState();
+  const userJSON = localStorage.getItem('user');
+
 
   useEffect(() => {
-    if (!token) {
+    if (!token || !userJSON) {
       navigate("/login");
     }
     const checkToken = async () => {
@@ -24,11 +28,13 @@ function Panel() {
         if (!connect) {
           localStorage.removeItem("token");
           localStorage.removeItem("user");
+          setLoggedUser(null);
           navigate("/login");
         }
       } catch (error) {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+        setLoggedUser(null);
         navigate("/login");
       }
     };
@@ -38,7 +44,7 @@ function Panel() {
 
   return (
     <div className="panel-container">
-      <Sidebar choice={setChoice}/>
+      <Sidebar choice={setChoice} />
       <div className="panel-content">
         {isLoading ? (
           <div>
@@ -50,9 +56,13 @@ function Panel() {
               <h1>Panel</h1>
               <hr />
             </div>
-            {choice == 'profile' && <UserInfo/>}
-            {choice == 'accounts' && <AccountInfo /> }
-            {choice == 'transactions' && <TransactionInfo /> }
+            {userJSON && (
+              <>
+                {choice === "profile" && <UserInfo />}
+                {choice === "accounts" && <AccountInfo />}
+                {choice === "transactions" && <TransactionInfo />}
+              </>
+            )}
           </div>
         )}
       </div>

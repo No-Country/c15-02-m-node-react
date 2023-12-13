@@ -4,6 +4,7 @@ import "./SignUp.css";
 import { useDispatch } from "react-redux";
 import { createUser } from "../../Redux/actions";
 import validate from "../../utils/validateSignUp";
+import { useGlobalState } from "../../Context/context";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const SignUp = () => {
   const [trigger, setTrigger] = useState(0);
   const navigate = useNavigate()
   const [errors, setErrors] = useState({});
+  const { loggedUser } = useGlobalState()
 
   const handleChange = (e) => {
     setInput((prevInput) => ({
@@ -32,6 +34,12 @@ const SignUp = () => {
       setErrors(validate(input));
     }
   }, [input]);
+
+  useEffect(() => {
+    if(loggedUser){
+      navigate("/panel");
+    }
+  },[loggedUser])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -169,7 +177,7 @@ const SignUp = () => {
             errors.confirmPassword
           }
         >
-          Sign Up
+          Registrarme
         </button>
         {errors.register !== "" && <p className="p-login-error">{errors.register}</p>}
         <p>

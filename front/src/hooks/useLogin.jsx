@@ -3,7 +3,7 @@ import axios from "axios";
 import { useGlobalState } from "../Context/context";
 
 const useLogin = () => {
-  const { API_URL } = useGlobalState();
+  const { API_URL, setLoggedUser } = useGlobalState();
   const [isLoading, setIsLoading] = useState(false);
 
   const login = async (email, password) => {
@@ -19,6 +19,7 @@ const useLogin = () => {
         // Store the token in local storage
         localStorage.setItem("token", response.data.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.data.user))
+        setLoggedUser(response.data.data.user);
         return true;
       } else {
         throw new Error("Login failed");
