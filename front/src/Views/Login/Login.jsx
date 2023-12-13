@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./Login.css";
@@ -13,6 +14,7 @@ const Login = () => {
   });
   const [trigger, setTrigger] = useState(0);
   const { login, isLoading } = useLogin();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInput((prevInput) => ({
@@ -37,7 +39,7 @@ const Login = () => {
       if (success) {
         // Handle the successful login
         console.log("Login successful");
-
+        navigate("/panel");
         // Clear the form inputs
         setInput({
           email: "",

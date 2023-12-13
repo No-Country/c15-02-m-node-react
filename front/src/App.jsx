@@ -11,6 +11,7 @@ import { useGlobalState } from './Context/context';
 import { useEffect } from 'react';
 import Error from './Views/404/Error';
 import Tutorial from './Views/Tutorial/Tutorial';
+import Panel from './Views/Panel/Panel';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
           <Route path="/tutorial" element={<Tutorial />} />
+          <Route path="/panel" element={<Panel />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/users" element={<Users />}/>
