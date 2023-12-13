@@ -5,7 +5,6 @@ import Login from './Views/Login/Login';
 import SignUp from './Views/SignUp/SignUp';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
-import UserInfo from './Components/UserInfo/UserInfo';
 import Users from './Components/Users/Users';
 import { useGlobalState } from './Context/context';
 import { useEffect } from 'react';
@@ -33,7 +32,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/users" element={<Users />}/>
-          <Route path="/users/:id" element={<UserInfo />}/>
           <Route path="*" element={<Error />}/>
         </Routes>
       </div>
