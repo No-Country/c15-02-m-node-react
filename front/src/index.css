@@ -98,6 +98,20 @@ body {
   color: white;
 }
 
+.dark-mode .login-form{
+  background-color: var(--clr-grey-dark);
+}
+
+.dark-mode .sign-up-form{
+  background-color: var(--clr-grey-dark);
+}
+
+.dark-mode .p-signup-error{
+  color: var(--clr-danger-light);
+}
+.dark-mode .p-login-error{
+  color: var(--clr-danger-light);
+}
 
 /* Links */
 

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { createUser } from "../../Redux/actions";
 import validate from "../../utils/validateSignUp";
 import { useGlobalState } from "../../Context/context";
+import Spinner from "../../Components/Spinner/Spinner";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,8 @@ const SignUp = () => {
   const [trigger, setTrigger] = useState(0);
   const navigate = useNavigate()
   const [errors, setErrors] = useState({});
-  const { loggedUser } = useGlobalState()
+  const { loggedUser } = useGlobalState();
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setInput((prevInput) => ({
@@ -43,7 +45,7 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+    setLoading(true)
     dispatch(createUser(input))
       .then(() => {
         setInput({
@@ -73,6 +75,7 @@ const SignUp = () => {
         }, 0);
       }).finally(()=>{
         setTrigger(0)
+        setLoading(false)
       })
   };
 
@@ -177,7 +180,7 @@ const SignUp = () => {
             errors.confirmPassword
           }
         >
-          Registrarme
+          {loading ? <Spinner/> : "Registrarme"}
         </button>
         {errors.register !== "" && <p className="p-login-error">{errors.register}</p>}
         <p>
