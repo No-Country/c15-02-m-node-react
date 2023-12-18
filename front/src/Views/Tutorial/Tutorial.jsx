@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Tutorial.css'
 import Steps from '../../Components/Tutorial/Steps';
 import { useTutorialState } from '../../Context/tutorialContext';
+import SwitchButton from '../../Components/Buttons/SwitchButton';
 
 function Tutorial() {
   const {tasks, currentTask} = useTutorialState()
+  const [toggle, setToggle] = useState(false)
  
   return (
     <main className='tutorial-container'>
@@ -12,7 +14,7 @@ function Tutorial() {
         <h1>Tutorial</h1>
         <hr />
       </div>
-      {currentTask < tasks.length ? (
+      {toggle ? (currentTask < tasks.length ? (
         <section>
           <Steps />
         </section>
@@ -21,7 +23,7 @@ function Tutorial() {
           <h2>Tutorial Completo</h2>
           <p>Felicitaciones! Completaste el tutorial.</p>
         </div>
-      )}
+      )) : <SwitchButton onToggle={()=>setToggle(!toggle)}/>}
     </main>
   );
 }
